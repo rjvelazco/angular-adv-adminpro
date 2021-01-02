@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-
-import {RouterModule} from '@angular/router'
+// Modules
+import { RouterModule } from '@angular/router'
 import { SharedModule } from '../shared/shared.module';
+import { ComponentsModule } from '../components/components.module';
+
 // import { AppRoutingModule } from '../app-routing.module';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -17,12 +20,14 @@ import { PagesComponent } from './pages.component';
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ComponentsModule,
     // AppRoutingModule,
   ],
   exports: [
