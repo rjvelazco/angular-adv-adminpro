@@ -7,6 +7,6 @@
     animation-fill-mode: both
 }
 
-.selector{
+.selector, .cursor{
     cursor: pointer;
 }

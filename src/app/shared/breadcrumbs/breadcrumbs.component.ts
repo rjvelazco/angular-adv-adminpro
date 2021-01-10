@@ -21,7 +21,7 @@ export class BreadcrumbsComponent implements OnDestroy {
     this.tituloSubs$ = this.getArgumentosRuta()
                         .subscribe(({ titulo }) => {
                           this.titulo = titulo;
-                          document.title = `AdminPor - ${{ titulo }}`;
+                          document.title = `AdminPor - ${titulo}`;
                         });
   }
   ngOnDestroy(): void {
