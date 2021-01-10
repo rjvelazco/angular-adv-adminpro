@@ -79,11 +79,8 @@ export class LoginComponent implements OnInit {
   async startApp() {
     
     await this.usuarioService.googleInit();
-
     this.auth2 = this.usuarioService.auth2;
-
     this.attachSignin(document.getElementById('my-signin2'));
-
   };
 
   attachSignin(element) {
@@ -103,7 +100,6 @@ export class LoginComponent implements OnInit {
   }
 
   validarCampos(campo: string): boolean{
-    
     return this.loginForm.get(campo).invalid && this.formSubmitted;
 
   }

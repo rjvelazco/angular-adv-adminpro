@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Modules
 import { RouterModule } from '@angular/router'
@@ -9,6 +9,7 @@ import { ComponentsModule } from '../components/components.module';
 
 // import { AppRoutingModule } from '../app-routing.module';
 
+// Components
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -16,6 +17,7 @@ import { PagesComponent } from './pages.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -27,12 +29,14 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     AccountSettingsComponent,
     PromesasComponent,
     RxjsComponent,
+    PerfilComponent,
   ],
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
     FormsModule,
+    ReactiveFormsModule,
     ComponentsModule,
     // AppRoutingModule,
   ],
@@ -41,7 +45,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     ProgressComponent,
     Grafica1Component,
     PagesComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    PerfilComponent
   ]
 })
 export class PagesModule { }

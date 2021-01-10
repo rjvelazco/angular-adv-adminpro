@@ -8,6 +8,9 @@ import { Observable, of } from 'rxjs';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 
+// Classes
+import { Usuario } from '../models/usuario.model';
+
 // Environment
 import { environment } from '../../environments/environment';
 
@@ -21,13 +24,22 @@ declare const gapi:any;
 export class UsuarioService {
 
   public auth2: any;
-  
+  public usuario: Usuario;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private ngZone: NgZone,
   ) { 
     this.googleInit();
+  }
+
+  get token(): string{
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(): string{
+    return this.usuario.uid || '';
   }
 
   googleInit() {
@@ -37,10 +49,8 @@ export class UsuarioService {
           client_id: '36937013322-c99e98k6stt4jh4donuce6dks9bgiaj1.apps.googleusercontent.com',
           cookiepolicy: 'single_host_origin',
         });
+        resolve();
       });
-
-      resolve();
-
     });
   }
 
@@ -55,17 +65,18 @@ export class UsuarioService {
   }
 
   validarToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
 
     return this.http.get(`${base_url}/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
-      tap((resp: any) => {
+      map((resp: any) => {
+        const { uid, nombre, email, img = '', role, google } = resp.usuario;
+        this.usuario = new Usuario(nombre, email, '', img, google, role, uid);
         localStorage.setItem('token', resp.token);
+        return true;
       }),
-      map(resp => true),
       catchError(error => of(false))
     )
   }
@@ -99,6 +110,16 @@ export class UsuarioService {
           localStorage.setItem('token', resp.token);
         })
       );
+  }
+
+  actualizarPerfil(data: {email:string, nombre:string}) {
+    
+    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {
+      headers: {
+        'x-token': this.token
+      }
+    });
+
   }
 
 

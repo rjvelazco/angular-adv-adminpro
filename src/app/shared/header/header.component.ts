@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Services
 import { UsuarioService } from '../../services/usuario.service';
+import { Usuario } from '../../models/usuario.model';
 
 declare function customInitFunctions();
 
@@ -13,17 +14,25 @@ declare function customInitFunctions();
 })
 export class HeaderComponent implements OnInit {
 
+  public usuario: Usuario;
+  public imgUrl: string;
+
   constructor(
     private usuarioService: UsuarioService
-  ) { }
+  ) { 
+    this.usuario = usuarioService.usuario;
+  }
 
   ngOnInit(): void {
-    customInitFunctions();
+    // customInitFunctions();
   }
 
   logout() {
     this.usuarioService.logout();
-    
+  }
+
+  get userImage() {
+    return this.usuario.imagenUrl;
   }
 
 }
