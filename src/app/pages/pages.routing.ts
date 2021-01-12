@@ -13,6 +13,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UsuariosComponent } from './mantenimientos/usuarios/usuarios.component';
 
 const routes: Routes = [
   {
@@ -23,10 +24,13 @@ const routes: Routes = [
       { path: '', component: DashboardComponent, data: {titulo: 'Dashboard'} },
       { path: 'account-settings', component: AccountSettingsComponent, data: {titulo: 'Tema de la Aplicacion'}},
       { path: 'grafica1', component: Grafica1Component, data: {titulo: 'Grafica'}},
+      { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil' } },
       { path: 'progress', component: ProgressComponent, data: {titulo: 'ProgressBar'}},
       { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas'}},
       { path: 'rxjs', component: RxjsComponent, data: {titulo: 'Rxjs'}},
-      { path: 'perfil', component: PerfilComponent, data: {titulo: 'Perfil'}},
+      
+      // Mantenimientos
+      { path: 'usuarios', component: UsuariosComponent, data: {titulo: 'usuarios'}},
       // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]
   },
