@@ -38,6 +38,10 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.imgSubs = this.modalImagenService.nuevaImagen.subscribe(img => this.cargarUsuarios());
   }
 
+  ngOnDestroy() {
+    this.imgSubs.unsubscribe();
+  }
+
   cargarUsuarios() {
     this.cargando = true;
     this.usuarioService.cargarUsuarios(this.desde)
@@ -49,9 +53,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    this.imgSubs.unsubscribe();
-  }
 
   cambiarPagina(valor:number) {
     
@@ -72,7 +73,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     }
 
     this.busquedasService.buscar('usuarios', termino)
-      .subscribe(resultados => {
+      .subscribe((resultados:Usuario[]) => {
         this.usuarios = resultados;
       });
   }
