@@ -26,6 +26,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   public desde: number = 0;
   public cargando: boolean = true;
+  public busquedaTemp: string = '';
 
   constructor(
     private usuarioService: UsuarioService,
@@ -35,7 +36,15 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cargarUsuarios();
+    
+    if (this.usuarioService.busqueda.length > 0) {
+      this.busquedaTemp = this.usuarioService.busqueda;
+      this.buscar(this.busquedaTemp);
+      this.usuarioService.busqueda = ''
+    }
+    
     this.imgSubs = this.modalImagenService.nuevaImagen.subscribe(img => this.cargarUsuarios());
+
   }
 
   ngOnDestroy() {
@@ -75,6 +84,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.busquedasService.buscar('usuarios', termino)
       .subscribe((resultados:Usuario[]) => {
         this.usuarios = resultados;
+        this.cargando = false;
       });
   }
 

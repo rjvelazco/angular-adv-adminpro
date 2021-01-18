@@ -15,13 +15,12 @@ export class SidebarComponent implements OnInit {
   public usuario: Usuario;
   
   // Menu
-  public menuItems: any[];
+  // public menuItems: any[];
 
   constructor(
-    private sidebarService: SidebarService,
+    public sidebarService: SidebarService,
     private usuarioService: UsuarioService
   ) { 
-    this.menuItems = sidebarService.menu;
     this.usuario = usuarioService.usuario;
   }
 
@@ -30,6 +29,10 @@ export class SidebarComponent implements OnInit {
 
   get userImage() {
     return this.usuario.imagenUrl;
+  }
+
+  logout() {
+    this.usuarioService.logout();
   }
 
 }

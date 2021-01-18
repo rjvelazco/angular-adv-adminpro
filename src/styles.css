@@ -29,6 +29,10 @@ input[type="file"]{
     display:none;
 }
 
+.w75{
+    width: 75px;
+}
+
 .w100 {
     width: 100px;
 }
@@ -40,7 +44,6 @@ input[type="file"]{
 .w200 {
     width: 200px;
 }
-
 
 .avatar{
     border-radius: 100%;
@@ -68,4 +71,8 @@ input[type="file"]{
 
 .oculto{
     display:none;
+}
+
+.logoutLink:hover {
+    color: #fff;
 }

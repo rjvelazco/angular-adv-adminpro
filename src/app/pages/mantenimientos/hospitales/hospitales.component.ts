@@ -20,9 +20,11 @@ export class HospitalesComponent implements OnInit, OnDestroy {
 
   public hospitales: Hospital[];
   public hospitalesTemp: Hospital[];
-  public cargando: boolean = true;
-  private imgSubs: Subscription;
 
+  private imgSubs: Subscription;
+  
+  public cargando: boolean  = true;
+  public busqueda: string   = '';
   constructor(
     private hospitalService: HospitalService,
     private modalImagenService: ModalImagenService,
@@ -31,6 +33,13 @@ export class HospitalesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.obtenerHospitales();
+
+    if (this.hospitalService.busqueda.length>0) {
+      this.busqueda = this.hospitalService.busqueda;
+      this.buscarHospital(this.busqueda);
+      this.hospitalService.busqueda = '';
+    }
+
     this.imgSubs = this.modalImagenService.nuevaImagen.subscribe(img => this.obtenerHospitales())
   }
 

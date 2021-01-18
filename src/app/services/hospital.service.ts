@@ -15,6 +15,8 @@ const base_url = environment.base_url;
 })
 export class HospitalService {
 
+  public busqueda: string = '';
+
   constructor(
     private http: HttpClient,
   ) { }

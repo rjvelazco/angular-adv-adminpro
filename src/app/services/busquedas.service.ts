@@ -48,6 +48,11 @@ export class BusquedasService {
     return resultados;
   }
 
+  busquedaGlobal(termino: string) {
+    const url = `${base_url}/todo/${termino}`;
+    return this.http.get<any[]>(url, this.headers);
+  }
+
   buscar( tipo:Tipos, termino: string='') {
     // http://localhost:8080/api/todo/coleccion/usuarios/e
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
