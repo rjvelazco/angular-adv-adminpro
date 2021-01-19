@@ -114,8 +114,8 @@ export class MedicoComponent implements OnInit, OnDestroy {
   }
 
   cargarHospitales() {
-    this.hospitalService.obtenerHospitales()
-      .subscribe(({hospitales}) => {
+    this.hospitalService.obtenerHospitalesTodos()
+      .subscribe((hospitales) => {
         this.hospitales = hospitales;
       })
   }

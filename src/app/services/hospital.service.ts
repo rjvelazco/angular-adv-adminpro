@@ -47,6 +47,17 @@ export class HospitalService {
       )
   }
 
+  obtenerHospitalesTodos() {
+    const url = `${base_url}/hospitales/todos`;   
+    
+    return this.http.get(url, this.headers)
+      .pipe(
+        map((resp: {ok: boolean, hospitales: Hospital[]}) => {
+          return resp.hospitales;
+        })            
+      )
+  }
+
   crearHospital(nombre: string) {
     const url = `${base_url}/hospitales`;
     return this.http.post(url, { nombre }, this.headers);

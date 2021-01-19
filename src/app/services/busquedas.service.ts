@@ -75,4 +75,15 @@ export class BusquedasService {
         })
       );
   }
+
+  cantidadRegistros() {
+    return this.http.get(`${base_url}/todo/total/documentos`, this.headers)
+      .pipe(
+        map((resp: any) => {
+          const { ok, ...totales } = resp;
+          return totales;
+        })
+      )
+  }
+
 }

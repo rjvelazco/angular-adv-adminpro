@@ -92,8 +92,8 @@ export class UsuarioService {
     return this.http.get(`${base_url}/login/renew`, this.headers)
       .pipe(
         map((resp: any) => {
-          const { uid, nombre, email, img = '', role, google } = resp.usuario;
-          this.usuario = new Usuario(nombre, email, '', img, google, role, uid);
+          const { uid, nombre, email, img = '', role, google, tareas = [] } = resp.usuario;
+          this.usuario = new Usuario(nombre, email, '', img, google, role, uid, tareas);
           this.guardarLocalStorage(resp.token, resp.menu);
           return true;
         }),
@@ -156,6 +156,27 @@ export class UsuarioService {
 
   guardarUsuario(usuario:Usuario) {
     return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
+  }
+
+  obtenerTareas() {
+    return this.http.get(`${base_url}/usuarios/tareas`, this.headers)
+      .pipe(
+        map((resp: {ok: boolean, usuario: string, tareas: string[]}) => {
+          return resp.tareas;
+        }),
+        catchError(error => of(false))
+      )
+  }
+
+  agregarTarae(tarea: string) {
+    // http://localhost:8080/api/usuarios/tarea
+    const url = `${base_url}/usuarios/tarea`;
+    return this.http.post(url, { tarea }, this.headers);
+  }
+
+  eliminarTarea(index: number) {
+    // usuarios/tareas/0
+    return this.http.delete(`${base_url}/usuarios/tareas/${index}`, this.headers);
   }
 
 }

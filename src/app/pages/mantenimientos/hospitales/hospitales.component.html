@@ -25,6 +25,7 @@
     </div>
 </div>
 
+
 <div *ngIf="!cargando" class="row">
     <div class="col-12">
         <div class="card">
@@ -44,8 +45,16 @@
                             </div>
                         </div>
                 </div>
-            
-                <div class="table-responsive">
+
+                <div class="alert alert-info animated fadeIn fast"
+                    *ngIf="hospitales.length === 0">
+                    <h4 class="alert-heading">No hay hospitales que concuenden con la busqueda.</h4>
+                    <p></p>
+                    <p class="mb-0"></p>
+                </div>
+                
+                <div class="table-responsive"
+                    *ngIf="hospitales.length > 0">
                     <table class="table table-bordered">
                         <thead>
                             <tr>

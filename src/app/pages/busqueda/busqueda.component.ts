@@ -10,6 +10,7 @@ import { Hospital } from '../../models/hospital.model';
 import { Medico } from '../../models/medico.model';
 import { Usuario } from '../../models/usuario.model';
 import { HospitalService } from 'src/app/services/hospital.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-busqueda',
@@ -48,8 +49,16 @@ export class BusquedaComponent implements OnInit {
   }
 
   irUsuario(termino: string) {
-    this.usuarioService.busqueda = termino;
-    this.router.navigateByUrl('/dashboard/usuarios');
+    if (this.usuarioService.usuario.role === 'ADMIN_ROLE') {
+      this.usuarioService.busqueda = termino;
+      this.router.navigateByUrl('/dashboard/usuarios');      
+    } else {
+      Swal.fire({
+        title: 'No autorizado',
+        text: 'Solo los administradores pueden ver la informacion sensible de los usuarios.',
+        icon: 'error',
+      })
+    }
   }
 
   irHospital(termino: string) {
