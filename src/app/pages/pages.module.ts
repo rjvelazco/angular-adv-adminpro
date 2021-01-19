@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 // Modules
 import { RouterModule } from '@angular/router'
@@ -49,7 +50,8 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
     FormsModule,
     ReactiveFormsModule,
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    ChartsModule
     // AppRoutingModule,
   ],
   exports: [

@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { SingleDataSet, Label } from 'ng2-charts';
+import { ChartType } from 'chart.js';
+import { BusquedasService } from '../../services/busquedas.service';
 
 @Component({
   selector: 'app-grafica1',
@@ -6,20 +10,27 @@ import { Component } from '@angular/core';
   styles: [
   ]
 })
-export class Grafica1Component {
+export class Grafica1Component implements OnInit {
 
-  public label1: string[] = ['Ventas', 'Perdidas', 'Ganancias'];
-  public data1 : number[] = [100, 200, 300];
+  public polarAreaChartLabels: Label[] = ['Usuario', 'Medicos', 'Hospitales'];
+  public polarAreaChartData: SingleDataSet = [];
+  public polarAreaLegend = true;
 
-  public label2: string[] = ['Autos', 'Aviones', 'Barcos'];
-  public data2 : number[] = [400, 500, 600];
+  public polarAreaChartType: ChartType = 'polarArea';
 
-  public label3: string[] = ['Play Station 5', 'Xbox X', 'PC Gamer'];
-  public data3 : number[] = [150, 250, 350];
+  constructor(
+    private busquedaServices: BusquedasService
+  ) { }
 
-  public label4: string[] = ['Comics','Libro', 'Peliculas'];
-  public data4 : number[] = [1000, 1200, 3000];
+  ngOnInit() {
+    
+    this.busquedaServices.cantidadRegistros()
+    .subscribe((totales: any) => { 
+      this.polarAreaChartData.push(totales.totalUsuarios);
+      this.polarAreaChartData.push(totales.totalMedicos);
+      this.polarAreaChartData.push(totales.totalHospitales);
+    });
+  }
 
-  constructor() { }
 
 }

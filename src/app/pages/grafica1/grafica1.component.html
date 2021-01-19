@@ -1,24 +1,16 @@
 <div class="row">
-    <div class="col-6">
-      <app-dona [titulo]="'Grafica 1'"
-                [labels]="label1"
-                [data]="data1"></app-dona> 
+    <div class="col-12">
+      <div *ngIf="polarAreaChartData.length > 0">
+        <div>
+          <div style="display: block">
+            <canvas baseChart
+              [data]="polarAreaChartData"
+              [labels]="polarAreaChartLabels"
+              [legend]="polarAreaLegend"
+              [chartType]="polarAreaChartType">
+            </canvas>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-6">
-      <app-dona [titulo]="'Grafica 2'"
-                [labels]="label2"
-                [data]="data2"></app-dona> 
-    </div>
-</div>
-<div class="row">
-  <div class="col-6">
-    <app-dona [titulo]="'Grafica 3'"
-              [labels]="label3"
-              [data]="data3"></app-dona> 
-  </div>
-  <div class="col-6">
-    <app-dona [titulo]="'Grafica 4'"
-              [labels]="label4"
-              [data]="data4"></app-dona> 
-  </div>
 </div>

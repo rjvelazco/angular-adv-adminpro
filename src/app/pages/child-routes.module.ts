@@ -26,9 +26,9 @@ const childRoutes: Routes = [
   { path: 'buscar/:termino', component: BusquedaComponent, data: {titulo: 'Busqueda'}},
   { path: 'grafica1', component: Grafica1Component, data: {titulo: 'Grafica'}},
   { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil' } },
-  { path: 'progress', component: ProgressComponent, data: {titulo: 'ProgressBar'}},
-  { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas'}},
-  { path: 'rxjs', component: RxjsComponent, data: {titulo: 'Rxjs'}},
+  // { path: 'progress', component: ProgressComponent, data: {titulo: 'ProgressBar'}},
+  // { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas'}},
+  // { path: 'rxjs', component: RxjsComponent, data: {titulo: 'Rxjs'}},
   
   // Mantenimientos
   { path: 'hospitales', component: HospitalesComponent, data: {titulo: 'hospitales'}},
