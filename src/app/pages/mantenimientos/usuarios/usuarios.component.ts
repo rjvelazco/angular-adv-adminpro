@@ -113,6 +113,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
           .subscribe((resp:any) => {
             if (resp.ok) {
               // this.usuarios = this.usuarios.filter(usuarioArr => usuarioArr.uid != usuario.uid);
+              this.regularPaginacion();
               this.cargarUsuarios();
 
               Swal.fire(
@@ -132,6 +133,12 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       .subscribe(resp => console.log(resp));
   }
 
+  regularPaginacion() {
+    this.totalUsuarios--;
+    if (this.totalUsuarios <= this.desde) {
+      this.desde -= 5;
+    }
+  }
 
   abrirModal(usuario: Usuario) {
     this.modalImagenService.abrirModal('usuarios',usuario.uid,usuario.img);

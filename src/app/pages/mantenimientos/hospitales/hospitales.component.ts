@@ -23,8 +23,13 @@ export class HospitalesComponent implements OnInit, OnDestroy {
 
   private imgSubs: Subscription;
   
-  public cargando: boolean  = true;
-  public busqueda: string   = '';
+  public cargando : boolean  = true;
+  public busqueda: string = '';
+  
+  public totalHospitales: number = 0;
+  public desde : number = 0;
+  
+
   constructor(
     private hospitalService: HospitalService,
     private modalImagenService: ModalImagenService,
@@ -49,8 +54,9 @@ export class HospitalesComponent implements OnInit, OnDestroy {
 
   obtenerHospitales() {
     this.cargando = true;
-    this.hospitalService.obtenerHospitales()
-      .subscribe((hospitales) => {
+    this.hospitalService.obtenerHospitales(this.desde)
+      .subscribe(({hospitales, total}) => {
+        this.totalHospitales = total;
         this.hospitales = hospitales;
         this.hospitalesTemp = hospitales;
         this.cargando = false;
@@ -65,7 +71,6 @@ export class HospitalesComponent implements OnInit, OnDestroy {
   }
 
   eliminarHospital(hospital: Hospital) {
-    
     Swal.fire({
       title: '¿Desea borrarlo?',
       text: `Esta a punto de borrar a ${hospital.nombre}`,
@@ -79,6 +84,7 @@ export class HospitalesComponent implements OnInit, OnDestroy {
         this.hospitalService.eliminarHospital(hospital._id)
           .subscribe(resp => {
             Swal.fire('Eliminado', `El hospital ${hospital.nombre} ha sido eliminado`, 'success');
+            this.regularPaginacion();
             this.obtenerHospitales();
           });
       }
@@ -95,6 +101,23 @@ export class HospitalesComponent implements OnInit, OnDestroy {
       });
   }
 
+  cambiarPagina(valor: number) {
+    this.desde += valor;
+    if (this.desde < 0) {
+      this.desde = 0;
+    } else if (this.desde >= this.totalHospitales) {
+      this.desde -= valor;
+    }
+    this.obtenerHospitales();
+  }
+
+  regularPaginacion() {
+    this.totalHospitales--;
+    if (this.totalHospitales <= this.desde) {
+      this.desde -= 5; 
+    }
+  }
+
   async abrirSweetAlert(){
     const { value  } = await Swal.fire<string>({
       title: 'Crear hospital',
@@ -106,9 +129,7 @@ export class HospitalesComponent implements OnInit, OnDestroy {
     
     if (value && value.trim().length > 0) {
       this.hospitalService.crearHospital(value)
-        .subscribe((resp:any) => {
-          this.hospitales.push(resp.hospital);
-        });
+        .subscribe((resp:any) => this.obtenerHospitales());
     }
   }
 

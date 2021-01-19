@@ -33,12 +33,16 @@ export class HospitalService {
     }
   }
 
-  obtenerHospitales() {
-    const url = `${base_url}/hospitales`;
+  obtenerHospitales(desde?: number) {
+    const url = `${base_url}/hospitales?desde=${desde || 0}`;   
+    
     return this.http.get(url, this.headers)
       .pipe(
-        map((resp: {ok: boolean, hospitales: Hospital[]}) => {
-          return resp.hospitales;
+        map((resp: {ok: boolean, hospitales: Hospital[], total: number}) => {
+          return {
+            hospitales: resp.hospitales,
+            total: resp.total
+          }
         })            
       )
   }

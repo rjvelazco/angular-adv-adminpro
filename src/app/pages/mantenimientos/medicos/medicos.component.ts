@@ -22,9 +22,11 @@ export class MedicosComponent implements OnInit, OnDestroy {
   public medicos: Medico[];
   public medicosTemp: Medico[];
 
+  public imgSubs: Subscription;
   public cargando: boolean = true;
 
-  public imgSubs: Subscription;
+  public totalMedicos: number = 0;5
+  public desde: number = 0;
 
   constructor(
     private medicoService: MedicoService,
@@ -46,9 +48,10 @@ export class MedicosComponent implements OnInit, OnDestroy {
 
   obtenerMedicos() {
     this.cargando = true;
-    this.medicoService.obtenerMedicos()
-      .subscribe(medicos => {
+    this.medicoService.obtenerMedicos(this.desde)
+      .subscribe(({ medicos, total }) => {
         this.cargando = false;
+        this.totalMedicos = total;
         this.medicos = medicos;
         this.medicosTemp = medicos;
       });
@@ -79,14 +82,33 @@ export class MedicosComponent implements OnInit, OnDestroy {
         this.medicoService.eliminarMedico(medico._id)
           .subscribe(resp => {
             Swal.fire('Eliminado', `El medico ${medico.nombre} ha sido eliminado`, 'success');
+            this.regularPaginacion();
             this.obtenerMedicos();
           });
       }
     });
   }
 
+  cambiarPagina(valor:number) {
+    this.desde += valor;
+    if (this.desde < 0) {
+      this.desde = 0;
+    } else if (this.desde >= this.totalMedicos) {
+      this.desde -= valor;
+    }
+
+    this.obtenerMedicos();
+  }
+
+  regularPaginacion() {
+    this.totalMedicos--;
+    if (this.totalMedicos <= this.desde) {
+      this.desde -= 5; 
+    }
+  }
+  
   abrirModal(medico: Medico) {
     this.modalImagenService.abrirModal('medicos', medico._id, medico.img);
   }
-
+  
 }

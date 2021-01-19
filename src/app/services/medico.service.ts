@@ -32,13 +32,16 @@ export class MedicoService {
     }
   }
 
-  obtenerMedicos() {
+  obtenerMedicos(desde?: number) {
     // /medicos
 
-    return this.http.get<Medico[]>(`${base_url}/medicos`, this.headers)
+    return this.http.get<any>(`${base_url}/medicos?desde=${desde | 0}`, this.headers)
       .pipe(
-        map((resp: any): Medico[] => {
-          return resp.medicos;
+        map((resp: {ok: boolean, medicos: Medico[], total: number })=> {
+          return {
+            medicos: resp.medicos,
+            total: resp.total
+          }
         })
       );
 
