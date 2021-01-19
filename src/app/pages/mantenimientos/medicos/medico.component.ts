@@ -24,7 +24,7 @@ import { ModalImagenService } from '../../../services/modal-imagen.service';
 export class MedicoComponent implements OnInit, OnDestroy {
 
   public medicoForm: FormGroup;
-  public hospitales: Hospital[];
+  public hospitales: Hospital[] = [];
 
   public medicoSeleccionado: Medico;
   public hospitalSeleccionado: Hospital;
@@ -50,11 +50,15 @@ export class MedicoComponent implements OnInit, OnDestroy {
       hospital: ['', [Validators.required]],
       
     });
-    
+
     this.medicoForm.get('hospital').valueChanges
+      .pipe(
+        delay(200)
+      )
       .subscribe(hospitalId => {
         this.hospitalSeleccionado = this.hospitales.find(h => h._id === hospitalId);
       });
+    
     
     this.imgSubs = this.modalImagenService.nuevaImagen
       .pipe(
