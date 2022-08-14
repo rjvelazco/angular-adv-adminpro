@@ -22,7 +22,7 @@ export class BusquedasService {
     private http: HttpClient
   ) { }
 
-  get token(): string{
+  get token(): string {
     return localStorage.getItem('token') || '';
   }
 
@@ -53,7 +53,7 @@ export class BusquedasService {
     return this.http.get<any[]>(url, this.headers);
   }
 
-  buscar( tipo:Tipos, termino: string='') {
+  buscar(tipo: Tipos, termino: string = '') {
     // http://localhost:8080/api/todo/coleccion/usuarios/e
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
     return this.http.get<any[]>(url, this.headers)
@@ -71,7 +71,7 @@ export class BusquedasService {
               return this.transformarHospital(resp.resultados);
               break;
           }
-    
+
         })
       );
   }
