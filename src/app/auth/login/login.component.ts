@@ -6,20 +6,19 @@ import Swal from 'sweetalert2';
 // Services
 import { UsuarioService } from '../../services/usuario.service';
 
-declare const gapi:any
-
+declare const gapi: any;
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls:['./login.component.css']
+  styleUrls: ['./login.component.css']
   // styleUrls: ["../../../assets/css/pages/login-register-lock.css"]
 })
 export class LoginComponent implements OnInit {
 
-  public formSubmitted: boolean = false;
+  public formSubmitted = false;
   public auth2: any;
-  
+
   public loginForm: FormGroup = this.fb.group({
     email: [localStorage.getItem('email') || '', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
@@ -37,7 +36,7 @@ export class LoginComponent implements OnInit {
     this.renderButton();
   }
 
-  login() {
+  login(): void {
     this.formSubmitted = true;
 
     if (this.loginForm.invalid) {
@@ -55,12 +54,12 @@ export class LoginComponent implements OnInit {
         }
         this.router.navigateByUrl('/dashboard');
       }, (err) => {
-          Swal.fire({
-            title: 'Error!',
-            text: err.error.msg,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          })
+        Swal.fire({
+          title: 'Error!',
+          text: err.error.msg,
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        })
       });
   }
 
@@ -72,12 +71,12 @@ export class LoginComponent implements OnInit {
       'longtitle': true,
       'theme': 'dark',
     });
-    
+
     this.startApp();
   }
 
   async startApp() {
-    
+
     await this.usuarioService.googleInit();
     this.auth2 = this.usuarioService.auth2;
     this.attachSignin(document.getElementById('my-signin2'));
@@ -85,21 +84,21 @@ export class LoginComponent implements OnInit {
 
   attachSignin(element) {
     this.auth2.attachClickHandler(element, {},
-        (googleUser) => {
-          const id_token = googleUser.getAuthResponse().id_token;
-          this.usuarioService.loginGoogle(id_token)
-            .subscribe((resp) => {
-              this.ngZone.run(() => {
-                this.router.navigateByUrl('/dashboard');
-              });
+      (googleUser) => {
+        const id_token = googleUser.getAuthResponse().id_token;
+        this.usuarioService.loginGoogle(id_token)
+          .subscribe((resp) => {
+            this.ngZone.run(() => {
+              this.router.navigateByUrl('/dashboard');
             });
-          
-        }, (error) =>{
-          alert(JSON.stringify(error, undefined, 2));
-        });
+          });
+
+      }, (error) => {
+        alert(JSON.stringify(error, undefined, 2));
+      });
   }
 
-  validarCampos(campo: string): boolean{
+  validarCampos(campo: string): boolean {
     return this.loginForm.get(campo).invalid && this.formSubmitted;
 
   }
