@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 // Services
 import { BusquedasService } from '../../services/busquedas.service';
@@ -11,6 +11,8 @@ import { UsuarioService } from '../../services/usuario.service';
   ]
 })
 export class DashboardComponent implements OnInit {
+
+  @ViewChild('txtTermino') txtTermino;
 
   public label: string[] = ['Usuarios', 'Medicos', 'Hospitales'];
   public data : number[] = [];
@@ -44,12 +46,17 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  agregarTarea(tarea: string) {
+  agregarTarea() {
+    const tarea = this.txtTermino.nativeElement.value;
+
     if(tarea.trim().length === 0){
       return;
     }
     this.usuarioService.agregarTarae(tarea)
-      .subscribe(resp => this.tareas.push(tarea));
+      .subscribe(resp => {
+        this.tareas.push(tarea)
+        this.txtTermino.nativeElement.value = '';
+      });
   }
 
 }
